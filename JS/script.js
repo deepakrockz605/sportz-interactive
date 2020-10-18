@@ -29,27 +29,20 @@ const loadCharacters = async () => {
     const valueFilter = hpcharacters.sort((a, b) => {
       return a.Value - b.Value;
     });
-	formatDate(valueFilter);
+    formatDate(valueFilter);
     displayCharacters(valueFilter);
   } catch (err) {
     console.log(err);
   }
 };
 
-
 formatDate = (data) => {
-	for(i=0;i<data.length;i++){
-		data[i].UpComingMatchesList[0].MDate = new Date(data[i].UpComingMatchesList[0].MDate)
-		data[i].UpComingMatchesList[0].date = data[i].UpComingMatchesList[0].MDate.getDate().toString().padStart(2, '0')
-		data[i].UpComingMatchesList[0].month = (data[i].UpComingMatchesList[0].MDate.getMonth()+1).toString().padStart(2, '0')
-		data[i].UpComingMatchesList[0].year = data[i].UpComingMatchesList[0].MDate.getFullYear().toString().padStart(4, '0')
-		data[i].UpComingMatchesList[0].hours = data[i].UpComingMatchesList[0].MDate.getHours().toString().padStart(2, '0')
-		data[i].UpComingMatchesList[0].hours = data[i].UpComingMatchesList[0].hours === '00' ? '12' : data[i].UpComingMatchesList[0].hours
-		data[i].UpComingMatchesList[0].minutes =data[i].UpComingMatchesList[0].MDate.getMinutes().toString().padStart(2, '0')
-		data[i].UpComingMatchesList[0].seconds =  data[i].UpComingMatchesList[0].MDate.getSeconds().toString().padStart(2, '0')
-		data[i].UpComingMatchesList[0].timezone = data[i].hours >= 12 ? 'PM' : 'AM';
-		data[i].UpComingMatchesList[0].MDate = `${data[i].UpComingMatchesList[0].date}-${data[i].UpComingMatchesList[0].month}-${data[i].UpComingMatchesList[0].year} ${data[i].UpComingMatchesList[0].hours}:${data[i].UpComingMatchesList[0].minutes}:${data[i].UpComingMatchesList[0].seconds} ${data[i].UpComingMatchesList[0].timezone}`
-	}
+  const formatedDate = "DD-MM-YYYY hh:mm:ss A";
+  const date = [];
+  for (i = 0; i < data.length; i++) {
+    date[i] = new Date(data[i].UpComingMatchesList[0].MDate);
+    data[i].UpComingMatchesList[0].MDate = moment(date[i]).format(formatedDate);
+  }
 };
 
 const displayCharacters = (characters) => {
@@ -88,16 +81,3 @@ const displayCharacters = (characters) => {
 };
 
 loadCharacters();
-
-
-// const format1 = "YYYY-MM-DD HH:mm:ss"
-// const format2 = "YYYY-MM-DD"
-// var date1 = new Date("2020-06-24 22:57:36");
-// var date2 = new Date();
-
-// dateTime1 = moment(date1).format(format1);
-// dateTime2 = moment(date2).format(format2);
-// console.log(dateTime1 , dateTime2)
-
-// document.getElementById("demo1").innerHTML = dateTime1;
-// document.getElementById("demo2").innerHTML = dateTime2;
